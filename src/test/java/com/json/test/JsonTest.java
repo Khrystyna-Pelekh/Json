@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class JsonTest {
 
-    List<Company> companies = JsonToObj.getCompany();
+    List<Company> companies = JsonToObj.getCompanies();
 
     @Test
     public void containExistingCompany() {

@@ -10,17 +10,16 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class JsonToObj {
-    public static List<Company> getCompany() {
+    public static List<Company> getCompanies() {
 
         JSONParser parser = new JSONParser();
         Object obj = null;
         try {
             obj = parser.parse(new FileReader("jsonTask.json"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
+
         JSONObject json = (JSONObject) obj;
         JSONObject manufacturers = (JSONObject) json.get("manufacturers");
         JSONObject childCompanies = (JSONObject) manufacturers.get("childCompanies");
@@ -35,10 +34,10 @@ public class JsonToObj {
 
     private static Company parseObject(JSONObject childCompanies, String name) {
         JSONObject companyObject = (JSONObject) childCompanies.get(name);
-        Company company = new Company();
-        company.setAddress(companyObject.get("address").toString());
-        company.setState(companyObject.get("state").toString());
-        company.setPhone(companyObject.get("phone").toString());
-        return company;
+        return new Company(
+                companyObject.get("address").toString(),
+                companyObject.get("state").toString(),
+                companyObject.get("phone").toString()
+        );
     }
 }

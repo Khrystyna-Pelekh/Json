@@ -52,4 +52,12 @@ public class Company {
                 state.equals(((Company) obj).state) &&
                 phone.equals(((Company) obj).phone);
     }
+
+    @Override
+    public int hashCode() {
+        int result = address.hashCode();
+        result = 31 * result + state.hashCode();
+        result = 31 * result + phone.hashCode();
+        return result;
+    }
 }
