@@ -2,8 +2,6 @@ package com.json.test;
 
 import com.json.Company;
 import com.json.JsonToObj;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
