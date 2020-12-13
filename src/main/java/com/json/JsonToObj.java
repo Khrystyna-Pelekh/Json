@@ -19,16 +19,15 @@ public class JsonToObj {
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
-
-        JSONObject json = (JSONObject) obj;
-        JSONObject manufacturers = (JSONObject) json.get("manufacturers");
-        JSONObject childCompanies = (JSONObject) manufacturers.get("childCompanies");
+        
+        JSONObject childCompanies = (JSONObject) ((JSONObject) ((JSONObject) obj)
+                .get("manufacturers"))
+                .get("childCompanies");
 
         List<Company> companies = new LinkedList<>();
         for (Object key : childCompanies.keySet()) {
             companies.add(parseObject(childCompanies, key.toString()));
         }
-
         return companies;
     }
 

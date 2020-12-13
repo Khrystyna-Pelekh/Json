@@ -17,22 +17,12 @@ public class JsonTest {
     @Test
     public void containExistingCompany() {
         Company existingCompany = new Company("Amazon Address", "LA", "123456");
-        assertTrue(contain(existingCompany, companies));
+        assertTrue(companies.contains(existingCompany));
     }
 
     @Test
     public void containUnexistingCompany() {
         Company unexistingCompany = new Company("Rozetka Address", "LA", "122123");
-        assertFalse(contain(unexistingCompany, companies));
-    }
-
-    public boolean contain(Company company, List<Company> companies) {
-        System.out.println(company);
-        for (Company comp : companies) {
-            if (company.equals(comp)) {
-                return true;
-            }
-        }
-        return false;
+        assertFalse(companies.contains(unexistingCompany));
     }
 }
