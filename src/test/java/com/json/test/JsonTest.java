@@ -1,28 +1,40 @@
 package com.json.test;
 
-import com.json.Company;
 import com.json.JsonToObj;
-import org.junit.Test;
+import com.models.ChildCompany;
+import com.models.Task;
+import lombok.extern.java.Log;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-
+@Log
 public class JsonTest {
 
-    List<Company> companies = JsonToObj.getCompanies();
+    Task _task;
+    List<ChildCompany> childCompanies;
+
+    @BeforeAll
+    public void init() {
+        _task = (Task) JsonToObj.mapJson("jsonTask.json", Task.class);
+        childCompanies = _task.getManufacturers().getChildCompanies();
+        for(ChildCompany childCompany : childCompanies){
+            log.info(childCompany.toString());
+        }
+    }
 
     @Test
     public void containExistingCompany() {
-        Company existingCompany = new Company("Amazon Address", "LA", "123456");
-        assertTrue(companies.contains(existingCompany));
+        ChildCompany existingCompany = new ChildCompany("Amazon Address", "LA", "123456");
+        assertTrue(childCompanies.contains(existingCompany));
     }
 
     @Test
     public void containUnexistingCompany() {
-        Company unexistingCompany = new Company("Rozetka Address", "LA", "122123");
-        assertFalse(companies.contains(unexistingCompany));
+        ChildCompany unexistingCompany = new ChildCompany("Rozetka Address", "LA", "122123");
+        assertFalse(childCompanies.contains(unexistingCompany));
     }
 }

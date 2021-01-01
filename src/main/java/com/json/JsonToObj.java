@@ -1,42 +1,21 @@
 package com.json;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.io.File;
 
 public class JsonToObj {
-    public static List<Company> getCompanies() {
-
-        JSONParser parser = new JSONParser();
-        Object obj = null;
+    public static Object mapJson(String fileName, Class classToMap) {
+        ObjectMapper mapper = new ObjectMapper();
+        Object jsonToJava = null;
         try {
-            obj = parser.parse(new FileReader("jsonTask.json"));
-        } catch (IOException | ParseException e) {
+            File json = new File(fileName);
+            jsonToJava  = mapper.readValue(json, classToMap);
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        JSONObject childCompanies = (JSONObject) ((JSONObject) ((JSONObject) obj)
-                .get("manufacturers"))
-                .get("childCompanies");
-
-        List<Company> companies = new LinkedList<>();
-        for (Object key : childCompanies.keySet()) {
-            companies.add(parseObject(childCompanies, key.toString()));
-        }
-        return companies;
-    }
-
-    private static Company parseObject(JSONObject childCompanies, String name) {
-        JSONObject companyObject = (JSONObject) childCompanies.get(name);
-        return new Company(
-                companyObject.get("address").toString(),
-                companyObject.get("state").toString(),
-                companyObject.get("phone").toString()
-        );
+        return  jsonToJava;
     }
 }
