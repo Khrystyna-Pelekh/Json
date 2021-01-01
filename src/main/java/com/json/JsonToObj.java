@@ -1,7 +1,5 @@
 package com.json;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
@@ -12,10 +10,10 @@ public class JsonToObj {
         Object jsonToJava = null;
         try {
             File json = new File(fileName);
-            jsonToJava  = mapper.readValue(json, classToMap);
+            jsonToJava = mapper.readValue(json, classToMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return  jsonToJava;
+        return jsonToJava;
     }
 }
